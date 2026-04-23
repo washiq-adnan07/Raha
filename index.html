@@ -3,596 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>RAHA NEXUS // AI CORE TERMINAL</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<title>RAHA NEXUS API | Complete AI Model Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  :root {
-    --primary-cyan: #00f3ff;
-    --primary-magenta: #ff00cc;
-    --deep-space: #020008;
-    --glass-dark: rgba(5, 5, 20, 0.75);
-    --border-glow: rgba(0, 243, 255, 0.4);
-  }
-
-  body {
-    background: var(--deep-space);
-    color: #eef5ff;
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
-
-  /* PARTICLE NETWORK BACKGROUND */
-  #particleCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.5;
-  }
-
-  /* LOADER - fixed */
-  #loader {
-    position: fixed;
-    inset: 0;
-    background: #000000dd;
-    backdrop-filter: blur(20px);
-    z-index: 10000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    transition: opacity 0.6s ease;
-  }
-
-  .hexagon-loader {
-    width: 220px;
-    height: 220px;
-    background: repeating-linear-gradient(45deg, #00f3ff, #ff00cc);
-    clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
-    animation: pulseHex 1.1s infinite alternate;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .hexagon-loader .inner {
-    width: 90%;
-    height: 90%;
-    background: #010005;
-    clip-path: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Orbitron';
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary-cyan);
-  }
-  @keyframes pulseHex {
-    0% { box-shadow: 0 0 0px cyan; opacity: 0.7; transform: scale(0.98);}
-    100% { box-shadow: 0 0 40px #ff00cc; opacity: 1; transform: scale(1.02);}
-  }
-
-  .percent-text {
-    font-family: 'Share Tech Mono';
-    font-size: 1.8rem;
-    letter-spacing: 5px;
-    margin-top: 28px;
-    background: linear-gradient(135deg, #00f3ff, #ff00cc);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* MAIN CONTENT */
-  #mainContent {
-    opacity: 0;
-    transition: opacity 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-    position: relative;
-    z-index: 5;
-  }
-
-  .glass-header {
-    background: rgba(2, 0, 10, 0.85);
-    backdrop-filter: blur(18px);
-    border-bottom: 1px solid var(--border-glow);
-    padding: 14px 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .badge {
-    font-family: 'Share Tech Mono';
-    font-size: 0.7rem;
-    color: var(--primary-cyan);
-    letter-spacing: 2px;
-  }
-
-  .audio-pulse {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: rgba(0, 243, 255, 0.1);
-    border: 1px solid var(--primary-cyan);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-
-  /* RAHA LOGO AREA */
-  .raha-symbol {
-    text-align: center;
-    margin: 45px auto 20px;
-  }
-  .ai-core {
-    font-family: 'Orbitron';
-    font-size: 3rem;
-    font-weight: 900;
-    background: linear-gradient(135deg, #ffffff, #00f3ff, #ff00cc);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    letter-spacing: 6px;
-  }
-  .sub-line {
-    color: var(--primary-cyan);
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin-top: 8px;
-  }
-
-  /* DASHBOARD MODULES */
-  .dashboard-modules {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 18px;
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-  .module {
-    background: var(--glass-dark);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 243, 255, 0.3);
-    border-radius: 32px;
-    padding: 18px 18px;
-    min-width: 130px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.25s ease;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --primary-cyan: #00f3ff; --primary-magenta: #ff00cc; --deep-space: #020008; --glass-dark: rgba(5,5,20,0.75); --border-glow: rgba(0,243,255,0.4); }
+  body { background: var(--deep-space); color: #eef5ff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+  #particleCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.4; }
+  #loader { position: fixed; inset: 0; background: #000000dd; backdrop-filter: blur(20px); z-index: 10000; display: flex; justify-content: center; align-items: center; flex-direction: column; transition: opacity 0.6s ease; }
+  .hexagon-loader { width: 220px; height: 220px; background: repeating-linear-gradient(45deg, #00f3ff, #ff00cc); clip-path: polygon(25% 0%,75% 0%,100% 25%,100% 75%,75% 100%,25% 100%,0% 75%,0% 25%); animation: pulseHex 1.1s infinite alternate; display: flex; align-items: center; justify-content: center; }
+  .hexagon-loader .inner { width: 90%; height: 90%; background: #010005; clip-path: inherit; display: flex; align-items: center; justify-content: center; font-family: 'Orbitron'; font-size: 2rem; font-weight: bold; color: var(--primary-cyan); }
+  @keyframes pulseHex { 0% { opacity: 0.7; transform: scale(0.98);} 100% { box-shadow: 0 0 40px #ff00cc; opacity: 1; transform: scale(1.02);} }
+  .percent-text { font-family: 'Share Tech Mono'; font-size: 1.8rem; letter-spacing: 5px; margin-top: 28px; background: linear-gradient(135deg, #00f3ff, #ff00cc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #mainContent { opacity: 0; transition: opacity 1.2s; position: relative; z-index: 5; }
+  .glass-header { background: rgba(2,0,10,0.85); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border-glow); padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+  .badge { font-family: 'Share Tech Mono'; font-size: 0.7rem; color: var(--primary-cyan); letter-spacing: 2px; }
+  .audio-pulse { width: 42px; height: 42px; border-radius: 50%; background: rgba(0,243,255,0.1); border: 1px solid var(--primary-cyan); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .raha-symbol { text-align: center; margin: 45px auto 20px; }
+  .ai-core { font-family: 'Orbitron'; font-size: 2.8rem; font-weight: 900; background: linear-gradient(135deg, #fff, #00f3ff, #ff00cc); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: 6px; }
+  .sub-line { color: var(--primary-cyan); font-size: 11px; letter-spacing: 4px; text-transform: uppercase; margin-top: 8px; }
+  .dashboard-modules { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+  .module { background: var(--glass-dark); backdrop-filter: blur(12px); border: 1px solid rgba(0,243,255,0.3); border-radius: 32px; padding: 18px; min-width: 140px; text-align: center; cursor: pointer; transition: 0.25s; }
   .module i { font-size: 28px; color: var(--primary-magenta); margin-bottom: 10px; display: block; }
-  .module span { font-size: 11px; font-weight: 600; font-family: 'Orbitron'; letter-spacing: 1px; }
-  .module:hover { border-color: var(--primary-cyan); transform: translateY(-6px); background: rgba(0, 243, 255, 0.15); box-shadow: 0 0 20px rgba(0, 243, 255, 0.3); }
-
-  /* GALLERY VISUAL */
-  .visual-gallery {
-    max-width: 860px;
-    margin: 20px auto 40px;
-    padding: 0 20px;
-  }
-  .grid-visuals {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  .vis-card {
-    border-radius: 32px;
-    overflow: hidden;
-    border: 1px solid var(--border-glow);
-    transition: 0.3s;
-  }
+  .module span { font-size: 11px; font-weight: 600; font-family: 'Orbitron'; }
+  .module:hover { border-color: var(--primary-cyan); transform: translateY(-6px); background: rgba(0,243,255,0.15); box-shadow: 0 0 20px rgba(0,243,255,0.3); }
+  .stats-bar { display: flex; justify-content: center; gap: 30px; margin: 20px auto; flex-wrap: wrap; }
+  .stat-card { background: rgba(0,0,0,0.5); border-radius: 20px; padding: 12px 25px; text-align: center; border: 1px solid var(--border-glow); }
+  .stat-number { font-family: 'Orbitron'; font-size: 2rem; color: var(--primary-cyan); }
+  .visual-gallery { max-width: 860px; margin: 20px auto 40px; padding: 0 20px; }
+  .grid-visuals { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+  .vis-card { border-radius: 32px; overflow: hidden; border: 1px solid var(--border-glow); }
   .vis-card img { width: 100%; height: 180px; object-fit: cover; filter: brightness(0.8); transition: 0.3s; }
   .vis-card:hover img { filter: brightness(1.1); transform: scale(1.02); }
-
-  footer {
-    padding: 30px;
-    text-align: center;
-    font-size: 9px;
-    opacity: 0.5;
-    font-family: monospace;
-  }
-
-  /* DRAWER STYLES */
-  .drawer {
-    position: fixed;
-    bottom: -100%;
-    left: 0;
-    width: 100%;
-    background: rgba(4, 1, 14, 0.98);
-    backdrop-filter: blur(32px);
-    border-top: 3px solid var(--primary-cyan);
-    border-radius: 38px 38px 0 0;
-    padding: 30px 24px 45px;
-    z-index: 1002;
-    transition: 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-    max-height: 85vh;
-    overflow-y: auto;
-    box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.9);
-  }
+  footer { padding: 30px; text-align: center; font-size: 9px; opacity: 0.5; }
+  .drawer { position: fixed; bottom: -100%; left: 0; width: 100%; background: rgba(4,1,14,0.98); backdrop-filter: blur(32px); border-top: 3px solid var(--primary-cyan); border-radius: 38px 38px 0 0; padding: 30px 24px 45px; z-index: 1002; transition: 0.5s; max-height: 85vh; overflow-y: auto; }
   .drawer.active { bottom: 0; }
-  #overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(8px);
-    display: none;
-    z-index: 1001;
-    cursor: pointer;
-  }
-  .drawer-title {
-    font-family: 'Orbitron';
-    font-size: 1.5rem;
-    border-left: 5px solid var(--primary-magenta);
-    padding-left: 16px;
-    margin-bottom: 24px;
-    color: var(--primary-cyan);
-  }
-  .info-card {
-    background: rgba(0, 243, 255, 0.05);
-    border-radius: 28px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(0, 243, 255, 0.2);
-  }
-  .chip-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  .chip {
-    background: rgba(255, 0, 204, 0.2);
-    padding: 6px 14px;
-    border-radius: 40px;
-    font-size: 12px;
-    font-family: monospace;
-    color: #ff99ff;
-  }
-  .close-drawer-btn {
-    width: 100%;
-    padding: 14px;
-    background: var(--primary-cyan);
-    border: none;
-    border-radius: 60px;
-    font-weight: bold;
-    font-family: 'Orbitron';
-    color: #010101;
-    margin-top: 12px;
-    cursor: pointer;
-  }
-  .contact-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 15px;
-  }
-  .contact-link {
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid var(--border-glow);
-    border-radius: 50px;
-    padding: 12px 18px;
-    text-decoration: none;
-    color: white;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    transition: 0.2s;
-    flex: 1 0 auto;
-  }
+  #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); display: none; z-index: 1001; cursor: pointer; }
+  .drawer-title { font-family: 'Orbitron'; font-size: 1.3rem; border-left: 5px solid var(--primary-magenta); padding-left: 16px; margin-bottom: 20px; color: var(--primary-cyan); }
+  .model-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 15px; margin-bottom: 20px; }
+  .model-card { background: rgba(0,243,255,0.05); border-radius: 20px; padding: 16px; border: 1px solid rgba(0,243,255,0.2); transition: 0.2s; }
+  .model-card:hover { background: rgba(0,243,255,0.1); transform: translateY(-3px); }
+  .model-name { font-family: 'Orbitron'; font-size: 1rem; color: var(--primary-cyan); margin-bottom: 8px; }
+  .model-company { font-size: 11px; color: #ff99ff; margin-bottom: 8px; }
+  .model-desc { font-size: 12px; opacity: 0.8; margin-bottom: 8px; }
+  .badge-free { background: #00aa55; padding: 2px 8px; border-radius: 20px; font-size: 9px; display: inline-block; margin-right: 6px; }
+  .badge-paid { background: #ff6600; padding: 2px 8px; border-radius: 20px; font-size: 9px; display: inline-block; }
+  .badge-limited { background: #ff00cc; padding: 2px 8px; border-radius: 20px; font-size: 9px; display: inline-block; }
+  .close-drawer-btn { width: 100%; padding: 14px; background: var(--primary-cyan); border: none; border-radius: 60px; font-weight: bold; font-family: 'Orbitron'; color: #010101; margin-top: 12px; cursor: pointer; }
+  .contact-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 15px; }
+  .contact-link { background: rgba(0,0,0,0.6); border: 1px solid var(--border-glow); border-radius: 50px; padding: 12px 18px; text-decoration: none; color: white; display: inline-flex; align-items: center; gap: 10px; font-size: 13px; transition: 0.2s; flex: 1 0 auto; }
   .contact-link i { color: var(--primary-cyan); font-size: 18px; }
-  .contact-link:hover { background: var(--primary-cyan); color: #000; border-color: #fff; }
-  .contact-link:hover i { color: #000; }
-  
-  .hidden { display: none !important; }
+  .contact-link:hover { background: var(--primary-cyan); color: #000; }
 </style>
 </head>
 <body>
-
 <canvas id="particleCanvas"></canvas>
-
-<div id="loader">
-  <div class="hexagon-loader"><div class="inner" id="loaderPercent">0%</div></div>
-  <div class="percent-text">⟁ RAHA NEXUS CORE BOOTING ⟁</div>
-</div>
-
+<div id="loader"><div class="hexagon-loader"><div class="inner" id="loaderPercent">0%</div></div><div class="percent-text">⟁ RAHA NEXUS CORE BOOTING ⟁</div></div>
 <div id="mainContent">
-  <div class="glass-header">
-    <div class="badge"><i class="fas fa-microchip"></i> RAHA_NEXUS::v4.0</div>
-    <div class="audio-pulse" onclick="toggleMusic()">
-      <i class="fas fa-pause" id="musicIcon"></i>
-    </div>
+  <div class="glass-header"><div class="badge"><i class="fas fa-microchip"></i> RAHA_NEXUS::API v5.0 | 35+ AI MODELS</div><div class="audio-pulse" onclick="toggleMusic()"><i class="fas fa-pause" id="musicIcon"></i></div></div>
+  <div class="raha-symbol"><div class="ai-core">⚡ RAHA NEXUS API ⚡</div><div class="sub-line">✦ Unified Gateway to 35+ Advanced AI Models ✦</div></div>
+  
+  <div class="stats-bar">
+    <div class="stat-card"><div class="stat-number">35+</div><div>AI Models</div></div>
+    <div class="stat-card"><div class="stat-number">24/7</div><div>Uptime</div></div>
+    <div class="stat-card"><div class="stat-number">FREE</div><div>Tier Available</div></div>
+    <div class="stat-card"><div class="stat-number">API</div><div>Nexus Gateway</div></div>
   </div>
 
-  <div class="raha-symbol">
-    <div class="ai-core">RAHA NEXUS</div>
-    <div class="sub-line">✦ Advanced AI Orchestrator ✦</div>
-  </div>
-
-  <!-- Dashboard - Focused on AI APIs and Creator Contact -->
   <div class="dashboard-modules">
-    <div class="module" onclick="openDrawer('chatApiDrawer')"><i class="fas fa-comments"></i><span>CHAT LLMs</span></div>
-    <div class="module" onclick="openDrawer('genApiDrawer')"><i class="fas fa-palette"></i><span>GEN IMAGE/VIDEO</span></div>
-    <div class="module" onclick="openDrawer('cloudDrawer')"><i class="fas fa-cloud-arrow-up"></i><span>CLOUD & CODING</span></div>
-    <div class="module" onclick="openDrawer('creatorDrawer')"><i class="fas fa-user-astronaut"></i><span>CREATOR CONTACT</span></div>
+    <div class="module" onclick="openDrawer('chatLlmDrawer')"><i class="fas fa-comments"></i><span>CHAT LLMs (15+)</span></div>
+    <div class="module" onclick="openDrawer('imageGenDrawer')"><i class="fas fa-palette"></i><span>IMAGE GEN (8+)</span></div>
+    <div class="module" onclick="openDrawer('videoGenDrawer')"><i class="fas fa-video"></i><span>VIDEO GEN (6+)</span></div>
+    <div class="module" onclick="openDrawer('codingDrawer')"><i class="fas fa-code"></i><span>CODING AI (5+)</span></div>
+    <div class="module" onclick="openDrawer('creatorDrawer')"><i class="fas fa-user-astronaut"></i><span>CREATOR</span></div>
   </div>
 
-  <!-- Visual showcase -->
-  <div class="visual-gallery">
-    <div style="font-family:'Share Tech Mono'; margin-bottom:12px; color:#00f3ff;"><i class="fas fa-waveform"></i> // AI GENERATION STREAMS //</div>
-    <div class="grid-visuals">
-      <div class="vis-card"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format" alt="Neural"></div>
-      <div class="vis-card"><img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format" alt="AI Core"></div>
-    </div>
-  </div>
-  <footer>⚡ RAHA NEXUS • 24/7 INFINITE INTELLIGENCE ⚡</footer>
+  <div class="visual-gallery"><div style="font-family:'Share Tech Mono';margin-bottom:12px;color:#00f3ff;"><i class="fas fa-waveform"></i> // POWERED BY RAHA NEXUS //</div>
+  <div class="grid-visuals"><div class="vis-card"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format" alt="AI"></div><div class="vis-card"><img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format" alt="Neural"></div></div></div>
+  <footer>⚡ RAHA NEXUS API • Created by Washiq Adnan • 24/7 Intelligent Gateway ⚡</footer>
 </div>
-
 <div id="overlay" onclick="closeDrawers()"></div>
 
-<!-- DRAWER: CHAT LLMs (Raha LM, GPT5, Grok, Llama4, Copilot, Google AI) -->
-<div id="chatApiDrawer" class="drawer">
-  <div class="drawer-title"><i class="fas fa-comment-dots"></i> // CHATTING API // LANGUAGE_MODELS</div>
-  <div class="info-card">
-    <strong>🧠 INTEGRATED LLM SUITE</strong>
-    <div class="chip-list">
-      <span class="chip">Raha LM latest (Raha Nexus API)</span>
-      <span class="chip">GPT 5</span>
-      <span class="chip">Grok Super</span>
-      <span class="chip">Google AI Latest Model</span>
-      <span class="chip">Llama 4</span>
-      <span class="chip">Microsoft Copilot</span>
-    </div>
-    <div style="margin-top: 15px;">⚡ Unified API Gateway that intelligently routes queries to the most capable model. Supports real‑time streaming, multi‑modal reasoning, and contextual memory. Raha Nexus API provides a single endpoint for all advanced language tasks.</div>
-  </div>
-  <div class="info-card">
-    <strong>✨ FEATURES</strong><br>
-    • Ultra‑low latency & high throughput<br>
-    • Multi‑language + code generation<br>
-    • Dynamic model switching based on complexity<br>
-    • 24/7 availability via cloud clusters
+<!-- CHAT LLMs DRAWER -->
+<div id="chatLlmDrawer" class="drawer">
+  <div class="drawer-title"><i class="fas fa-comment-dots"></i> // CHAT & LANGUAGE MODELS (15+ Models)</div>
+  <div class="model-grid">
+    <div class="model-card"><div class="model-name">🤖 RAHA NEXUS API</div><div class="model-company">Creator: Washiq Adnan | 🇧🇩自主研发</div><div class="model-desc">Custom fine-tuned LLM, ultra-fast, Bangla+English code-mix, emotional intelligence, memory recall.</div><span class="badge-free">FREE TIER</span><span class="badge-paid">PAID PRO</span></div>
+    <div class="model-card"><div class="model-name">🧠 GPT-5</div><div class="model-company">OpenAI | Sam Altman</div><div class="model-desc">Most advanced reasoning, multimodal, 1M+ context window, AGI-level performance.</div><span class="badge-paid">PAID</span></div>
+    <div class="model-card"><div class="model-name">⚡ GPT-4o</div><div class="model-company">OpenAI</div><div class="model-desc">Omni-modal, real-time voice, vision, fastest GPT yet.</div><span class="badge-free">Limited Free</span><span class="badge-paid">Paid</span></div>
+    <div class="model-card"><div class="model-name">🚀 Grok Super</div><div class="model-company">xAI | Elon Musk</div><div class="model-desc">Real-time X data, humorous, unfiltered, massive context.</div><span class="badge-paid">X Premium</span></div>
+    <div class="model-card"><div class="model-name">🔵 Google Gemini Ultra 2.0</div><div class="model-company">Google DeepMind</div><div class="model-desc">Multimodal, YouTube integration, 2M token context, best for research.</div><span class="badge-free">Free</span><span class="badge-paid">Paid</span></div>
+    <div class="model-card"><div class="model-name">🦙 Llama 4</div><div class="model-company">Meta (Facebook) | Mark Zuckerberg</div><div class="model-desc">Open-source beast, 400B+ params, coding, reasoning, completely free.</div><span class="badge-free">100% FREE</span></div>
+    <div class="model-card"><div class="model-name">💻 Microsoft Copilot</div><div class="model-company">Microsoft | Satya Nadella</div><div class="model-desc">GitHub integrated, best for coding, Windows ecosystem.</div><span class="badge-free">Free</span><span class="badge-paid">Pro</span></div>
+    <div class="model-card"><div class="model-name">🎨 Claude 3.5 Sonnet</div><div class="model-company">Anthropic</div><div class="model-desc">Best for long documents, coding, safe AI, 200K context.</div><span class="badge-limited">Limited Free</span><span class="badge-paid">Paid</span></div>
+    <div class="model-card"><div class="model-name">🔥 DeepSeek V3</div><div class="model-company">深度求索 (DeepSeek) | China</div><div class="model-desc">671B MoE, open-source, extremely cheap API, Chinese+English expert.</div><span class="badge-free">FREE</span></div>
+    <div class="model-card"><div class="model-name">🌟 Mistral Large 2</div><div class="model-company">Mistral AI | France</div><div class="model-desc">European champion, 128K context, strong reasoning.</div><span class="badge-free">Free Tier</span></div>
+    <div class="model-card"><div class="model-name">🎯 Perplexity Sonar</div><div class="model-company">Perplexity AI</div><div class="model-desc">Real-time web search + citations, best for research.</div><span class="badge-free">Free</span><span class="badge-paid">Pro</span></div>
+    <div class="model-card"><div class="model-name">💎 Command R+</div><div class="model-company">Cohere</div><div class="model-desc">RAG optimized, enterprise ready, 128K context.</div><span class="badge-paid">Enterprise</span></div>
+    <div class="model-card"><div class="model-name">🌊 Qwen 2.5 Max</div><div class="model-company">Alibaba Cloud</div><div class="model-desc">72B params, multilingual, strong math & coding.</div><span class="badge-free">FREE</span></div>
+    <div class="model-card"><div class="model-name">🎭 Pi AI</div><div class="model-company">Inflection AI</div><div class="model-desc">Emotionally intelligent, friendly conversationalist.</div><span class="badge-free">FREE</span></div>
+    <div class="model-card"><div class="model-name">🇧🇩 Mirzann AI</div><div class="model-company">Mirzann | 🇧🇩 Bangladesh</div><div class="model-desc">Local Bangla-optimized LLM, cultural context, community focused.</div><span class="badge-free">FREE</span></div>
   </div>
   <button class="close-drawer-btn" onclick="closeDrawers()">⟳ CLOSE</button>
 </div>
 
-<!-- DRAWER: GENERATING API (Image + Video) -->
-<div id="genApiDrawer" class="drawer">
-  <div class="drawer-title"><i class="fas fa-image"></i> // GENERATING API // IMAGE & VIDEO</div>
-  <div class="info-card">
-    <strong>🎨 MULTI‑MODAL GENERATION SUITE</strong>
-    <div class="chip-list">
-      <span class="chip">Nano Banana Image Generating</span>
-      <span class="chip">Ideogram Latest API</span>
-      <span class="chip">Dormina Latest API</span>
-      <span class="chip">Animate Video API</span>
-      <span class="chip">Vio3 API</span>
-      <span class="chip">Sora AI API</span>
-    </div>
-    <div style="margin-top: 15px;">🔥 State‑of‑the‑art diffusion and transformer models for photorealistic images, cinematic video generation, and real‑time animation. All APIs are accessible via Raha Nexus unified interface.</div>
-  </div>
-  <div class="info-card">
-    <strong>🚀 CAPABILITIES</strong><br>
-    • Text‑to‑image with Ideogram & Dormina<br>
-    • Text‑to‑video (Sora, Animate, Vio3)<br>
-    • High‑resolution output & style control<br>
-    • Batch processing & async callbacks
+<!-- IMAGE GENERATION DRAWER -->
+<div id="imageGenDrawer" class="drawer">
+  <div class="drawer-title"><i class="fas fa-palette"></i> // IMAGE GENERATION MODELS (8+ Models)</div>
+  <div class="model-grid">
+    <div class="model-card"><div class="model-name">🍌 Nano Banana</div><div class="model-company">Nano Labs</div><div class="model-desc">Ultra-fast image generation, 4K output, 1 second per image.</div><span class="badge-free">Free</span></div>
+    <div class="model-card"><div class="model-name">🎨 Ideogram 2.0</div><div class="model-company">Ideogram AI</div><div class="model-desc">Best typography, text rendering, stunning artistic styles.</div><span class="badge-free">Free</span><span class="badge-paid">Pro</span></div>
+    <div class="model-card"><div class="model-name">💤 Dormina Latest</div><div class="model-company">Dormina AI</div><div class="model-desc">Dream-like surreal images, artistic diffusion.</div><span class="badge-free">Free</span></div>
+    <div class="model-card"><div class="model-name">🎬 Midjourney V7</div><div class="model-company">Midjourney Inc</div><div class="model-desc">Best aesthetic, cinematic, artistic superiority.</div><span class="badge-paid">Paid</span></div>
+    <div class="model-card"><div class="model-name">🖼️ DALL-E 3</div><div class="model-company">OpenAI</div><div class="model-desc">Accurate prompt following, creative, ChatGPT integrated.</div><span class="badge-paid">Paid (API)</span></div>
+    <div class="model-card"><div class="model-name">⚡ Leonardo Phoenix</div><div class="model-company">Leonardo AI</div><div class="model-desc">Game assets, character design, 4K upscale.</div><span class="badge-free">Free tier</span><span class="badge-paid">Paid</span></div>
+    <div class="model-card"><div class="model-name">🎨 Stable Diffusion 3.5</div><div class="model-company">Stability AI</div><div class="model-desc">Open-source, custom models, control nets.</div><span class="badge-free">100% FREE</span></div>
+    <div class="model-card"><div class="model-name">✨ Playground v3</div><div class="model-company">Playground AI</div><div class="model-desc">Design focused, social media templates.</div><span class="badge-free">Free</span></div>
   </div>
   <button class="close-drawer-btn" onclick="closeDrawers()">⎚ EXIT</button>
 </div>
 
-<!-- DRAWER: CLOUD & CODING API -->
-<div id="cloudDrawer" class="drawer">
-  <div class="drawer-title"><i class="fas fa-cloud"></i> // CLOUD & CODING // INFRASTRUCTURE</div>
-  <div class="info-card">
-    <strong>💻 DEVELOPMENT & CLOUD ECOSYSTEM</strong>
-    <div class="chip-list">
-      <span class="chip">GPT 4.o (Code Expert)</span>
-      <span class="chip">Google AI Studio</span>
-      <span class="chip">Online 24/7 Uptime</span>
-      <span class="chip">Llama 4 Coding</span>
-      <span class="chip">Microsoft Copilot Cloud</span>
-    </div>
-    <div style="margin-top: 12px;">Full‑stack AI coding assistant, auto‑debugging, real‑time refactoring, and documentation generation. Cloud infrastructure built on high‑availability VPS clusters with auto‑scaling and global CDN.</div>
+<!-- VIDEO GENERATION DRAWER -->
+<div id="videoGenDrawer" class="drawer">
+  <div class="drawer-title"><i class="fas fa-video"></i> // VIDEO GENERATION MODELS (6+ Models)</div>
+  <div class="model-grid">
+    <div class="model-card"><div class="model-name">🎬 Sora AI</div><div class="model-company">OpenAI</div><div class="model-desc">Text-to-video, 60s HD videos, realistic physics, cinematic.</div><span class="badge-paid">Limited Access</span></div>
+    <div class="model-card"><div class="model-name">🎞️ Animate Video API</div><div class="model-company">Animate Labs</div><div class="model-desc">Image to animation, 4K output, smooth motion.</div><span class="badge-free">Free</span></div>
+    <div class="model-card"><div class="model-name">📹 Vio3 API</div><div class="model-company">Vio AI</div><div class="model-desc">3D video generation, depth mapping, VR ready.</div><span class="badge-paid">Paid</span></div>
+    <div class="model-card"><div class="model-name">🎥 Runway Gen-3</div><div class="model-company">Runway ML</div><div class="model-desc">High fidelity video, motion brush, lip sync.</div><span class="badge-limited">Free trial</span><span class="badge-paid">Paid</span></div>
+    <div class="model-card"><div class="model-name">🌀 Pika Labs 2.0</div><div class="model-company">Pika Labs</div><div class="model-desc">Fun, fast video generation, social media ready.</div><span class="badge-free">Free</span><span class="badge-paid">Pro</span></div>
+    <div class="model-card"><div class="model-name">🌌 Kling</div><div class="model-company">Kuaishou Technology</div><div class="model-desc">2-minute video generation, realistic human motion.</div><span class="badge-free">Free</span></div>
   </div>
-  <div class="info-card">
-    <strong>⚙️ RAHA NEXUS CLOUD FEATURES</strong><br>
-    • 99.99% uptime SLA • Edge caching • Secure API keys management<br>
-    • Serverless function integration • Webhook support for automation
-  </div>
-  <button class="close-drawer-btn" onclick="closeDrawers()">⟁ DISMISS</button>
+  <button class="close-drawer-btn" onclick="closeDrawers()">⟁ CLOSE</button>
 </div>
 
-<!-- DRAWER: CREATOR CONTACT (ONLY CONTACT INFO) -->
+<!-- CODING AI DRAWER -->
+<div id="codingDrawer" class="drawer">
+  <div class="drawer-title"><i class="fas fa-code"></i> // CODING & DEVELOPMENT AI (5+ Models)</div>
+  <div class="model-grid">
+    <div class="model-card"><div class="model-name">💻 GitHub Copilot</div><div class="model-company">Microsoft + OpenAI</div><div class="model-desc">Real-time code completion, VS Code integration, pair programmer.</div><span class="badge-paid">Paid (Free for students)</span></div>
+    <div class="model-card"><div class="model-name">🤖 Cursor AI</div><div class="model-company">Cursor Team</div><div class="model-desc">AI-first IDE, codebase understanding, best refactoring.</div><span class="badge-free">Free tier</span><span class="badge-paid">Pro</span></div>
+    <div class="model-card"><div class="model-name">⚡ CodeWhisperer</div><div class="model-company">Amazon AWS</div><div class="model-desc">AWS integrated, security scanning, enterprise ready.</div><span class="badge-free">Free for individuals</span></div>
+    <div class="model-card"><div class="model-name">🧠 Claude Engineer</div><div class="model-company">Anthropic</div><div class="model-desc">Full-stack development, debugging, documentation.</div><span class="badge-free">Limited</span><span class="badge-paid">Paid</span></div>
+    <div class="model-card"><div class="model-name">🐍 Codeium</div><div class="model-company">Codeium</div><div class="model-desc">100% free alternative to Copilot, 70+ languages.</div><span class="badge-free">100% FREE</span></div>
+  </div>
+  <button class="close-drawer-btn" onclick="closeDrawers()">⎚ EXIT</button>
+</div>
+
+<!-- CREATOR DRAWER -->
 <div id="creatorDrawer" class="drawer">
-  <div class="drawer-title"><i class="fas fa-user-secret"></i> // CREATOR // CONTACT_MESH</div>
-  <div class="info-card" style="text-align: center;">
-    <i class="fas fa-crown" style="font-size: 40px; color: #ff00cc; margin-bottom: 12px; display: inline-block;"></i>
-    <h3 style="font-family: 'Orbitron'; margin-bottom: 20px;">Washiq Adnan</h3>
-    <p style="margin-bottom: 20px;">Creator & Lead Architect of Raha Nexus API Ecosystem</p>
-    <div class="contact-row">
-      <a href="https://www.facebook.com/share/1KNxtzq8jn/" class="contact-link"><i class="fab fa-facebook"></i> Facebook</a>
-      <a href="https://m.me/washiqadnan.fb" class="contact-link"><i class="fab fa-messenger"></i> Messenger</a>
-      <a href="https://wa.me/8801303790672" class="contact-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-      <a href="https://t.me/+8801303790672" class="contact-link"><i class="fab fa-telegram"></i> Telegram</a>
-      <a href="https://www.tiktok.com/@loser_0.98" class="contact-link"><i class="fab fa-tiktok"></i> TikTok</a>
-      <a href="https://chithi.me/washiq_adnan" class="contact-link"><i class="fas fa-envelope-open-text"></i> Chithi.me</a>
-      <a href="mailto:Washidev4@gmail.com" class="contact-link" style="flex-basis: 100%;"><i class="fas fa-envelope"></i> Washidev4@gmail.com</a>
-    </div>
-    <div style="margin-top: 20px; font-size: 12px; background: rgba(0,243,255,0.1); padding: 12px; border-radius: 28px;">
-      <i class="fas fa-globe"></i> 24/7 Support & API Inquiries | Raha Nexus Official Channel
-    </div>
-  </div>
-  <button class="close-drawer-btn" onclick="closeDrawers()" style="background: #ff00cc;">✖ CLOSE</button>
-</div>
-
-<script>
-  // ========== PARTICLE NETWORK + ELECTRIC BACKGROUND ==========
-  const canvas = document.getElementById('particleCanvas');
-  let ctx = canvas.getContext('2d');
-  let width, height;
-  function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
-  window.addEventListener('resize', resize);
-  resize();
-
-  let particles = [];
-  for(let i=0; i<110; i++) {
-    particles.push({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.6,
-      vy: (Math.random() - 0.5) * 0.4 + 0.3,
-      radius: 1 + Math.random() * 2
-    });
-  }
-
-  function drawNetwork() {
-    if(!ctx) return;
-    ctx.fillStyle = '#020008';
-    ctx.fillRect(0, 0, width, height);
-    for(let p of particles) {
-      ctx.beginPath();
-      ctx.fillStyle = '#00f3ff';
-      ctx.shadowBlur = 4;
-      ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
-      ctx.fill();
-      p.x += p.vx;
-      p.y += p.vy;
-      if(p.x < 0) p.x = width;
-      if(p.x > width) p.x = 0;
-      if(p.y < 0) p.y = height;
-      if(p.y > height) p.y = 0;
-    }
-    // draw connections
-    for(let i=0; i<particles.length; i++) {
-      for(let j=i+1; j<particles.length; j++) {
-        let dx = particles[i].x - particles[j].x;
-        let dy = particles[i].y - particles[j].y;
-        let dist = Math.hypot(dx, dy);
-        if(dist < 95) {
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(0, 243, 255, ${0.1 * (1 - dist/100)})`;
-          ctx.lineWidth = 0.6;
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(drawNetwork);
-  }
-  drawNetwork();
-
-  // ========== LOADER - FIXED (নিশ্চিতভাবে 100% এ消失 হবে) ==========
-  let loadValue = 0;
-  const loaderSpan = document.getElementById('loaderPercent');
-  const loaderDiv = document.getElementById('loader');
-  const mainDiv = document.getElementById('mainContent');
-  
-  function finishLoading() {
-    // লোডার fade out এবং সরিয়ে ফেলা
-    loaderDiv.style.opacity = '0';
-    setTimeout(() => {
-      loaderDiv.style.display = 'none';
-      mainDiv.style.opacity = '1';
-    }, 600);
-  }
-  
-  const loadInterval = setInterval(() => {
-    loadValue += Math.floor(Math.random() * 6) + 3; // 3-8 করে বাড়বে
-    if(loadValue >= 100) {
-      loadValue = 100;
-      clearInterval(loadInterval);
-      loaderSpan.innerText = "100%";
-      // 100% হওয়ার সাথে সাথে লোডার বন্ধ
-      finishLoading();
-    }
-    loaderSpan.innerText = loadValue + "%";
-  }, 50);
-  
-  // ব্যাকআপ: কখনো যদি 100 ছাড়িয়ে যায় বা আটকে যায় (সেফটি)
-  setTimeout(() => {
-    if(loaderDiv.style.display !== 'none') {
-      clearInterval(loadInterval);
-      loaderSpan.innerText = "100%";
-      finishLoading();
-    }
-  }, 5000);
-
-  // AUDIO HANDLER
-  let bgAudio = null;
-  function initAudio() {
-    try {
-      bgAudio = new Audio('https://files.catbox.moe/j1lae6.mp3');
-      bgAudio.loop = true;
-      bgAudio.volume = 0.35;
-      bgAudio.play().catch(e => console.log("autoplay blocked, click icon"));
-    } catch(e) { console.log("audio error"); }
-  }
-  function toggleMusic() {
-    if(!bgAudio) { initAudio(); return; }
-    const icon = document.getElementById('musicIcon');
-    if(bgAudio.paused) {
-      bgAudio.play().catch(()=>{});
-      icon.className = "fas fa-pause";
-    } else {
-      bgAudio.pause();
-      icon.className = "fas fa-music";
-    }
-  }
-  window.toggleMusic = toggleMusic;
-  
-  // মিউজিক auto-start করতে ইউজার interaction এর পর
-  document.body.addEventListener('click', function once() {
-    if(bgAudio && bgAudio.paused) {
-      bgAudio.play().catch(()=>{});
-    }
-    document.body.removeEventListener('click', once);
-  });
-
-  // DRAWER CONTROLS
-  function openDrawer(id) {
-    const drawer = document.getElementById(id);
-    const overlay = document.getElementById('overlay');
-    if(drawer) drawer.classList.add('active');
-    if(overlay) overlay.style.display = 'block';
-  }
-  function closeDrawers() {
-    document.querySelectorAll('.drawer').forEach(d => d.classList.remove('active'));
-    document.getElementById('overlay').style.display = 'none';
-  }
-  window.openDrawer = openDrawer;
-  window.closeDrawers = closeDrawers;
-  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeDrawers(); });
-  
-  // ছবি লোড নিশ্চিত করতে mainContent দেখানোর আগে ছবি ready করা
-  window.addEventListener('load', () => {
-    // যদি লোডার ইতিমধ্যেই finish না হয়ে থাকে তাহলে finish করে দিবে
-    if(loaderDiv.style.display !== 'none' && loadValue >= 100) {
-      finishLoading();
-    }
-  });
-</script>
-
-</body>
-  </html>
+  <div class="drawer-title"><i class="fas fa-user-secret"></i> // CREATOR & CONTACT</div>
+  <div class="model-card" style="text-align:center;"><i class="fas fa-crown" style="font-size:40px;color:#ff00cc;"></i><h3 style="font-family:'Orbitron';">Washiq Adnan</h3><p>Creator & Lead Architect of RAHA NEXUS API</p><p style="font-size:12px;">🇧🇩 Bangladesh • Full-Stack
